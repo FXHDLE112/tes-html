@@ -1,22 +1,22 @@
 {
   "movies": [
-    { "title": "Action Movie", "img": "https://via.placeholder.com/400x600/f00/fff.png", "src": "https://www.w3schools.com/html/mov_bbb.mp4" },
-    { "title": "Comedy Short", "img": "https://via.placeholder.com/400x600/0f0/fff.png", "src": "https://www.w3schools.com/html/movie.mp4" }
+    {
+      "title": "Action Movie",
+      "img": "https://via.placeholder.com/400x600/f00/fff.png",
+      "src": "https://www.w3schools.com/html/mov_bbb.mp4"
+    },
+    {
+      "title": "Comedy Short",
+      "img": "https://via.placeholder.com/400x600/0f0/fff.png",
+      "src": "https://www.w3schools.com/html/movie.mp4"
+    }
   ],
   "shows": [
     {
-      "title": "Dragon Ball Dorm-test",
+      "title": "dragon ball dorm",
       "img": "https://github.com/FXHDLE112/test/releases/download/astorybasedgame1222/website.fix.again.1.1.png",
-      "seasons": [
-        {
-          "season": 1,
-          "episodes": [
-            { "title": "Episode 1", "src": "https://ik.imagekit.io/dookpgmfq9/The%20Legendary%20Beach.mp4?updatedAt=1756452207635" },
-            { "title": "Episode 2", "src": "https://www.w3schools.com/html/movie.mp4" }
-          ]
-        }
-      ]
+      "src": "https://ik.imagekit.io/dookpgmfq9/The%20Legendary%20Beach.mp4?updatedAt=1756452207635",
+      "subtitles": null
     }
   ]
 }
-
