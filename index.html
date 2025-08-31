@@ -97,13 +97,22 @@ video{width:95%;max-width:980px;border-radius:8px;background:#000}
 <div id="playerPage" class="page">
   <h1 id="playerTitle">Player</h1>
   <div id="player">
-    <video id="videoPlayer" controls crossorigin="anonymous"></video>
+    <video 
+      id="videoPlayer" 
+      controls 
+      playsinline 
+      webkit-playsinline 
+      preload="auto" 
+      style="width:95%;max-width:980px;border-radius:8px;background:#000">
+      Sorry, your browser does not support HTML5 video.
+    </video>
   </div>
   <div class="controls">
     <button class="btn" id="toggleSubsBtn">Toggle Subtitles</button>
     <button class="btn ghost" id="playerBackBtn">Back</button>
   </div>
 </div>
+
 
 <!-- ADMIN PAGE -->
 <div id="adminPage" class="page">
