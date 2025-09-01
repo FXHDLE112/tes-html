@@ -9,23 +9,23 @@
           "season": 1,
           "episodes": [
             {
-              "title": "episode 1",
+              "title": "episode 1 the legendary beach",
               "src": "https://ik.imagekit.io/dookpgmfq9/The%20Legendary%20Beach.mp4?updatedAt=1756452207635",
               "subtitles": null
             },
             {
-              "title": "episode 2",
-              "src": "https://ik.imagekit.io/dookpgmfq9/The%20Legendary%20Beach.mp4?updatedAt=1756452207635",
+              "title": "episode 2 campsite chaos",
+              "src": "https://ik.imagekit.io/dookpgmfq9/0823.mp4?updatedAt=1756733964550",
               "subtitles": null
             },
             {
-              "title": "episode 3",
-              "src": "https://ik.imagekit.io/dookpgmfq9/The%20Legendary%20Beach.mp4?updatedAt=1756452207635",
+              "title": "episode 3 prison outbreak",
+              "src": "https://ik.imagekit.io/dookpgmfq9/prison%20outbreak%20compressed.mp4?updatedAt=1756736773190",
               "subtitles": null
             },
             {
-              "title": "episode 4",
-              "src": "https://ik.imagekit.io/dookpgmfq9/The%20Legendary%20Beach.mp4?updatedAt=1756452207635",
+              "title": "episode 4 the sleepover",
+              "src": "https://ik.imagekit.io/dookpgmfq9/sleepover.mp4?updatedAt=1756736864187",
               "subtitles": null
             }
           ]
