@@ -129,7 +129,7 @@ video{width:95%;max-width:980px;border-radius:8px;background:#000}
 
 <script>
 const firebaseConfig = {
-apiKey: "AIzaSyCvd_IgPL3_gYjhfplngBboHWjSLRIhhIE",
+  apiKey: "AIzaSyCvd_IgPL3_gYjhfplngBboHWjSLRIhhIE",
   authDomain: "fahadflix-storage.firebaseapp.com",
   databaseURL: "https://fahadflix-storage-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "fahadflix-storage",
@@ -187,12 +187,30 @@ const profilesContainer=document.getElementById('profilesContainer');
 async function loadProfiles(){
   if(!currentUser) return;
   const snapshot = await db.ref('profiles/'+currentUser.uid).once('value');
-  if(snapshot.exists()){ profiles = snapshot.val(); if(!Array.isArray(profiles)) profiles=[profiles]; }
-  else { profiles=[{name:"User 1",img:"https://via.placeholder.com/150"}]; await db.ref('profiles/'+currentUser.uid).set(profiles);}
+  
+  if(snapshot.exists()){ 
+    let data = snapshot.val();
+
+    // Ensure profiles is always an array
+    if(Array.isArray(data)){
+      profiles = data;
+    } else if(typeof data === 'object'){
+      profiles = Object.values(data);
+    } else {
+      profiles = [];
+    }
+
+  } else { 
+    profiles=[{name:"User 1",img:"https://via.placeholder.com/150"}]; 
+    await db.ref('profiles/'+currentUser.uid).set(profiles);
+  }
+
   renderProfiles();
 }
 
-async function saveProfiles(){ if(currentUser) await db.ref('profiles/'+currentUser.uid).set(profiles); }
+async function saveProfiles(){ 
+  if(currentUser) await db.ref('profiles/'+currentUser.uid).set(profiles); 
+}
 
 document.getElementById('addProfileBtn').addEventListener('click', async()=>{
   const name=document.getElementById('newProfileName').value.trim();
@@ -263,7 +281,7 @@ function renderHome(search=''){
     const card=document.createElement('div'); card.className='movie-card';
     card.innerHTML=`<img src="${m.img||''}"><div class="title">${m.title||'Untitled'}</div>`;
     card.addEventListener('click', ()=> openPlayer(m.title,m.src,m.subtitles));
-    moviesContainer.appendChild(card); mRow.appendChild(card);
+    mRow.appendChild(card);
   });
   moviesContainer.appendChild(mRow);
 
