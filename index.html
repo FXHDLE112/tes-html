@@ -5,42 +5,68 @@
   <title>FahadFlix</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
-    body{margin:0;background:#141414;color:#fff;font-family:sans-serif}
-    header{background:#000;padding:10px;text-align:center}
-    #profiles,#home,#player{display:none;padding:20px}
-    .profile{cursor:pointer;margin:10px;display:inline-block}
-    .movie{cursor:pointer;margin:10px;display:inline-block;width:150px}
-    video{width:100%;max-height:70vh;background:#000}
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+    body{background:#141414;color:#fff;min-height:100vh}
+    header{display:flex;justify-content:space-between;align-items:center;padding:1rem;background:#000}
+    header h1{color:#e50914}
+    nav button{background:none;border:none;color:#fff;font-size:1rem;margin:0 .5rem;cursor:pointer}
+    #content{padding:1rem}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem}
+    .card{background:#222;padding:.5rem;border-radius:8px;cursor:pointer;text-align:center}
+    .card img{width:100%;border-radius:4px}
+    .hidden{display:none}
+    #player video{width:100%;max-height:80vh;background:#000}
+    #login,#profiles{max-width:400px;margin:2rem auto;padding:2rem;background:#222;border-radius:8px}
+    input,button{padding:.5rem;margin:.5rem 0;width:100%}
+    button{background:#e50914;color:#fff;border:none;cursor:pointer;border-radius:4px}
+    #seasonSelect{margin-bottom:1rem;padding:.5rem;width:200px}
   </style>
 </head>
 <body>
-  <header><h1>FahadFlix</h1></header>
+  <header>
+    <h1>FahadFlix</h1>
+    <nav>
+      <button onclick="showPage('home')">Home</button>
+      <button onclick="showPage('profiles')">Profiles</button>
+      <button onclick="logout()">Logout</button>
+    </nav>
+  </header>
 
-  <!-- Profiles -->
-  <section id="profiles">
-    <h2>Select Profile</h2>
-    <div id="profileList"></div>
-    <button onclick="createProfile()">Add Profile</button>
-  </section>
+  <div id="content">
+    <!-- Login Page -->
+    <div id="login">
+      <h2>Login</h2>
+      <input id="email" type="email" placeholder="Email" />
+      <input id="password" type="password" placeholder="Password" />
+      <button onclick="login()">Login</button>
+      <button onclick="signup()">Sign Up</button>
+    </div>
 
-  <!-- Home -->
-  <section id="home">
-    <h2>Movies</h2>
-    <input type="text" id="searchInput" placeholder="Search..." oninput="renderMovies()" />
-    <div id="moviesList"></div>
-    <button onclick="logout()">Logout</button>
-  </section>
+    <!-- Profiles Page -->
+    <div id="profiles" class="hidden">
+      <h2>Select Profile</h2>
+      <div id="profileList"></div>
+      <input id="newProfileName" placeholder="New Profile Name" />
+      <button onclick="addProfile()">Add Profile</button>
+    </div>
 
-  <!-- Player -->
-  <section id="player">
-    <video id="videoPlayer" controls playsinline webkit-playsinline></video>
-    <button onclick="closePlayer()">Close</button>
-  </section>
+    <!-- Home Page -->
+    <div id="home" class="hidden">
+      <h2>Movies & Shows</h2>
+      <select id="seasonSelect" onchange="loadSeason()"></select>
+      <div class="grid" id="movieGrid"></div>
+    </div>
 
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <!-- Player Page -->
+    <div id="player" class="hidden">
+      <video id="videoPlayer" controls></video>
+      <button onclick="showPage('home')">Back</button>
+    </div>
+  </div>
 
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
   <script>
     const firebaseConfig = {
 apiKey: "AIzaSyCvd_IgPL3_gYjhfplngBboHWjSLRIhhIE",
@@ -57,107 +83,115 @@ apiKey: "AIzaSyCvd_IgPL3_gYjhfplngBboHWjSLRIhhIE",
 
     let currentUser = null;
     let moviesData = {};
-    let currentProfile = null;
+    let currentSeason = "Season 1";
 
-    // GitHub movies.json
-    const MOVIES_URL = "https://raw.githubusercontent.com/FXHDLE112/tes-html/refs/heads/main/movies.json";
+    function showPage(page){
+      document.querySelectorAll("#content > div").forEach(d=>d.classList.add("hidden"));
+      document.getElementById(page).classList.remove("hidden");
+    }
+
+    function login(){
+      const email=document.getElementById("email").value;
+      const password=document.getElementById("password").value;
+      auth.signInWithEmailAndPassword(email,password).catch(alert);
+    }
+    function signup(){
+      const email=document.getElementById("email").value;
+      const password=document.getElementById("password").value;
+      auth.createUserWithEmailAndPassword(email,password).catch(alert);
+    }
+    function logout(){auth.signOut();}
 
     auth.onAuthStateChanged(user=>{
-      if(user){
-        currentUser = user;
-        showPage('profiles');
-        loadProfiles();
-        loadMovies();
-      } else {
-        auth.signInAnonymously();
-      }
+      if(user){currentUser=user; loadProfiles(); showPage('profiles');}
+      else{currentUser=null; showPage('login');}
     });
 
-    function showPage(id){
-      document.querySelectorAll('section').forEach(s=>s.style.display='none');
-      document.getElementById(id).style.display='block';
-    }
-
-    async function loadProfiles(){
-      const snap = await db.ref('profiles/'+currentUser.uid).once('value');
-      const profiles = snap.val()||{};
-      const div = document.getElementById('profileList');
-      div.innerHTML='';
-      Object.keys(profiles).forEach(k=>{
-        const d=document.createElement('div');
-        d.className='profile';
-        d.innerText=profiles[k].name;
-        d.onclick=()=>selectProfile(k,profiles[k].name);
-        div.appendChild(d);
+    function loadProfiles(){
+      db.ref("profiles/"+currentUser.uid).once("value",snap=>{
+        const list=document.getElementById("profileList");
+        list.innerHTML="";
+        snap.forEach(c=>{
+          const btn=document.createElement("button");
+          btn.textContent=c.key;
+          btn.onclick=()=>{loadMovies(); showPage('home');};
+          list.appendChild(btn);
+        });
       });
     }
-
-    function createProfile(){
-      const name = prompt("Profile name?");
-      if(!name) return;
-      const id = Date.now();
-      db.ref('profiles/'+currentUser.uid+'/'+id).set({name});
+    function addProfile(){
+      const name=document.getElementById("newProfileName").value;
+      if(!name)return;
+      db.ref("profiles/"+currentUser.uid+"/"+name).set(true);
       loadProfiles();
     }
 
-    function selectProfile(id,name){
-      currentProfile={id,name};
-      showPage('home');
-      renderMovies();
-    }
-
     async function loadMovies(){
-      const res = await fetch(MOVIES_URL);
-      moviesData = await res.json();
+      const res=await fetch("https://raw.githubusercontent.com/FXHDLE112/tes-html/refs/heads/main/movies.json");
+      moviesData=await res.json();
+      const seasonSelect=document.getElementById("seasonSelect");
+      seasonSelect.innerHTML="";
+      Object.keys(moviesData).forEach(season=>{
+        const opt=document.createElement("option");
+        opt.value=season;
+        opt.textContent=season;
+        seasonSelect.appendChild(opt);
+      });
+      currentSeason=Object.keys(moviesData)[0];
+      seasonSelect.value=currentSeason;
       renderMovies();
     }
-
+    function loadSeason(){
+      currentSeason=document.getElementById("seasonSelect").value;
+      renderMovies();
+    }
     function renderMovies(){
-      const search=document.getElementById('searchInput').value.toLowerCase();
-      const div=document.getElementById('moviesList');
-      div.innerHTML='';
-      Object.keys(moviesData).forEach(title=>{
-        if(title.toLowerCase().includes(search)){
-          const m=document.createElement('div');
-          m.className='movie';
-          m.innerText=title;
-          m.onclick=()=>openPlayer(title,moviesData[title].src,moviesData[title].subs);
-          div.appendChild(m);
-        }
+      const grid=document.getElementById("movieGrid");
+      grid.innerHTML="";
+      const season=moviesData[currentSeason];
+      if(!season)return;
+      season.forEach(show=>{
+        const card=document.createElement("div");
+        card.className="card";
+        card.innerHTML=`<img src="${show.thumbnail}" alt=""><p>${show.title}</p>`;
+        card.onclick=()=>openPlayer(show.title,show.src,show.subs);
+        grid.appendChild(card);
       });
     }
 
-    // ✅ Fixed openPlayer for iOS
+    // 🔹 Fixed iOS-safe video player
     async function openPlayer(title, src, subs) {
       showPage('player');
-      const videoPlayer=document.getElementById('videoPlayer');
+
+      const videoPlayer=document.getElementById("videoPlayer");
       videoPlayer.innerHTML="";
 
-      const source=document.createElement('source');
+      const source=document.createElement("source");
       source.src=src||'';
-      source.type='video/mp4';
+      source.type="video/mp4";
       videoPlayer.appendChild(source);
-
-      if(currentUser){
-        const snapshot=await db.ref(`resume/${currentUser.uid}/${title}`).once('value');
-        if(snapshot.exists()) videoPlayer.currentTime=snapshot.val();
-      }
-
-      videoPlayer.ontimeupdate=()=>{
-        if(!videoPlayer.paused) saveResumeTime(title,videoPlayer.currentTime);
-      };
-
-      if(subs){
-        const track=document.createElement('track');
-        track.src=subs;
-        track.kind='subtitles';
-        track.srclang='en';
-        track.label='English';
-        videoPlayer.appendChild(track);
-      }
 
       videoPlayer.setAttribute("playsinline","");
       videoPlayer.setAttribute("webkit-playsinline","");
+
+      if(currentUser){
+        const snapshot=await db.ref(`resume/${currentUser.uid}/${title}`).once('value');
+        if(snapshot.exists()){videoPlayer.currentTime=snapshot.val();}
+      }
+
+      videoPlayer.ontimeupdate=()=>{
+        if(!videoPlayer.paused) saveResumeTime(title, videoPlayer.currentTime);
+      };
+
+      if(subs){
+        const track=document.createElement("track");
+        track.src=subs;
+        track.kind="subtitles";
+        track.srclang="en";
+        track.label="English";
+        videoPlayer.appendChild(track);
+      }
+
       videoPlayer.load();
       videoPlayer.play().catch(()=>{});
     }
@@ -166,16 +200,6 @@ apiKey: "AIzaSyCvd_IgPL3_gYjhfplngBboHWjSLRIhhIE",
       if(currentUser){
         db.ref(`resume/${currentUser.uid}/${title}`).set(time);
       }
-    }
-
-    function closePlayer(){
-      const videoPlayer=document.getElementById('videoPlayer');
-      videoPlayer.pause();
-      showPage('home');
-    }
-
-    function logout(){
-      auth.signOut();
     }
   </script>
 </body>
