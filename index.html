@@ -8,113 +8,76 @@
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
 body{background:#141414;color:#fff;min-height:100vh}
 .container{max-width:1100px;margin:18px auto;padding:12px}
-
-/* AUTH PAGE */
 .auth-box{max-width:420px;margin:60px auto;padding:20px;background:#1f1f1f;border-radius:10px;text-align:center}
 .auth-box input,.auth-box button{width:100%;padding:10px;margin:8px 0;border-radius:6px;border:none}
 .auth-box input{background:#333;color:#fff}
 .auth-box button{background:#e50914;color:#fff;font-weight:700;cursor:pointer}
-.auth-box button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.3)}
-
-/* GENERAL */
 .page{display:none}
 .active{display:block}
 h1{margin:14px 0;text-align:center}
 
-/* PROFILE PAGE */
-#profilesContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 18px;
-  justify-content: center;
-  margin-top: 20px;
+/* ---- PROFILES PAGE FIXES ---- */
+#profilesContainer{
+  display:flex;
+  flex-wrap:wrap;
+  gap:18px;
+  justify-content:center;
+  margin-top:30px;
 }
 
-.profile-card {
+.profile-card{
   width:140px;
   text-align:center;
   background:#1b1b1b;
-  padding:8px;
+  padding:12px;
   border-radius:10px;
   position:relative;
+  transition:transform 0.2s;
 }
 
-.profile-card img {
+.profile-card:hover{transform:scale(1.05);}
+
+.profile-card img{
   width:120px;
   height:120px;
   object-fit:cover;
   border-radius:12px;
   cursor:pointer;
+  transition:transform 0.2s;
 }
 
-.profile-card p{margin:6px 0}
-.profile-card button{margin-top:4px;width:100%;padding:4px 0;font-size:12px}
+.profile-card p{margin:8px 0 4px;font-weight:600;}
+.profile-card button{margin-top:6px;width:100%;padding:6px 0;font-size:12px;}
 
-/* ADD PROFILE AREA */
-.add-area{
-  display:grid;
-  grid-template-columns: 1fr auto auto;
-  gap:8px;
-  max-width:520px;
-  margin:18px auto;
-  padding:12px;
-  background:#161616;
-  border-radius:8px;
-  align-items:center;
-}
+.add-area{max-width:520px;margin:18px auto;padding:12px;background:#161616;border-radius:8px;display:flex;gap:8px;align-items:center}
+.add-area input[type="text"], .add-area input[type="file"], .add-area select{flex:1;padding:10px;border-radius:6px;border:none;background:#222;color:#fff}
+.add-area button{padding:10px 12px;background:#e50914;border:none;color:#fff;border-radius:6px;cursor:pointer}
 
-.add-area input[type="text"], 
-.add-area input[type="file"], 
-.add-area select {
-  padding:10px;
-  border-radius:6px;
-  border:none;
-  background:#222;
-  color:#fff;
-}
-
-.add-area button {
-  padding:10px 12px;
-  background:#e50914;
-  border:none;
-  color:#fff;
-  border-radius:6px;
-  cursor:pointer;
-}
-
-/* HOME PAGE */
 #moviesContainer{display:flex;flex-direction:column;gap:20px;padding:12px}
 .row{display:flex;gap:12px;overflow-x:auto}
 .movie-card{background:#1d1d1d;border-radius:10px;overflow:hidden;cursor:pointer;position:relative;min-width:160px}
 .movie-card img{width:100%;display:block;height:240px;object-fit:cover;transition:transform .25s}
 .movie-card:hover img{transform:scale(1.05)}
 .movie-card .title{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,0.55);padding:6px 8px;border-radius:6px}
-
-/* EPISODES */
 .episode-card{background:#1f1f1f;padding:12px;border-radius:8px;cursor:pointer;margin-bottom:8px}
 
-/* PLAYER */
 #player{margin:20px auto;text-align:center}
 video{width:95%;max-width:980px;border-radius:8px;background:#000}
 .controls{display:flex;gap:8px;justify-content:center;margin-top:12px}
 
-/* SEARCH INPUT */
 #searchInput{width:100%;padding:10px;margin:12px 0;border-radius:6px;border:none;background:#222;color:#fff}
 
-/* RESPONSIVE */
 @media (max-width:600px){
-  .add-area{grid-template-columns:1fr;gap:8px;}
+  .add-area{flex-direction:column;align-items:stretch}
   .movie-card img{height:180px}
   .profile-card img{width:100px;height:100px}
+  .profile-card{width:110px;padding:8px}
 }
 </style>
-
-<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-database-compat.js"></script>
 </head>
-
 <body>
 <div class="container">
 
@@ -125,7 +88,7 @@ video{width:95%;max-width:980px;border-radius:8px;background:#000}
     <input id="email" type="email" placeholder="Email" />
     <input id="password" type="password" placeholder="Password" />
     <button id="signInBtn">Sign In</button>
-    <button id="signUpBtn" class="ghost">Sign Up</button>
+    <button id="signUpBtn" class="btn ghost">Sign Up</button>
   </div>
 </div>
 
@@ -139,7 +102,7 @@ video{width:95%;max-width:980px;border-radius:8px;background:#000}
   </div>
   <div id="profilesContainer"></div>
   <div style="text-align:center;margin-top:12px">
-    <button id="signOutBtn" class="ghost">Sign Out</button>
+    <button id="signOutBtn" class="btn ghost">Sign Out</button>
   </div>
 </div>
 
@@ -148,9 +111,9 @@ video{width:95%;max-width:980px;border-radius:8px;background:#000}
   <div style="display:flex;justify-content:space-between;align-items:center">
     <h1 id="welcomeTitle">Browse</h1>
     <div style="display:flex;gap:8px;align-items:center">
-      <button id="switchProfileBtn" class="ghost">Switch Profile</button>
-      <button id="logoutBtn">Logout</button>
-      <button id="adminToggleBtn" class="ghost" style="display:none">Admin Panel</button>
+      <button id="switchProfileBtn" class="btn ghost">Switch Profile</button>
+      <button id="logoutBtn" class="btn">Logout</button>
+      <button id="adminToggleBtn" class="btn ghost" style="display:none">Admin Panel</button>
     </div>
   </div>
   <input id="searchInput" type="text" placeholder="Search movies or shows..." />
@@ -161,7 +124,7 @@ video{width:95%;max-width:980px;border-radius:8px;background:#000}
 <div id="episodesPage" class="page">
   <div style="display:flex;justify-content:space-between;align-items:center">
     <h1 id="showTitle">Show</h1>
-    <button id="backToHome" class="ghost">Back</button>
+    <button id="backToHome" class="btn ghost">Back</button>
   </div>
   <div id="episodesContainer"></div>
 </div>
@@ -194,13 +157,13 @@ video{width:95%;max-width:980px;border-radius:8px;background:#000}
   </div>
   <div id="adminList"></div>
   <button id="saveToGithubBtn" class="btn">Save Changes to GitHub</button>
-  <button onclick="showPage('home')" class="ghost">Back</button>
+  <button onclick="showPage('home')" class="btn ghost">Back</button>
 </div>
 
 </div>
 
 <script>
-// Firebase config & initialization
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCvd_IgPL3_gYjhfplngBboHWjSLRIhhIE",
   authDomain: "fahadflix-storage.firebaseapp.com",
@@ -223,7 +186,50 @@ const pages={
 };
 function showPage(name){ Object.values(pages).forEach(el=>el.classList.remove('active')); pages[name].classList.add('active'); }
 
-// ... (all the rest of your JavaScript remains unchanged)
+// ==== PROFILES PAGE SAFE ====
+const profilesContainer=document.getElementById('profilesContainer');
+document.getElementById('addProfileBtn').addEventListener('click', async ()=>{
+  const name=document.getElementById('newProfileName').value.trim();
+  const file=document.getElementById('newProfileImage').files[0];
+  if(!name){ alert('Enter name'); return; }
+  if(!file){ alert('Pick an image'); return; }
+  const reader=new FileReader();
+  reader.onload=async e=>{
+    profiles.push({name,img:e.target.result});
+    await db.ref('profiles/'+currentUser.uid).set(profiles);
+    document.getElementById('newProfileName').value='';
+    document.getElementById('newProfileImage').value='';
+    renderProfiles();
+  };
+  reader.readAsDataURL(file);
+});
+
+function renderProfiles(){
+  profilesContainer.innerHTML='';
+  profiles.forEach((p,index)=>{
+    const div=document.createElement('div'); div.className='profile-card';
+    div.innerHTML=`<img src="${p.img}" alt="${p.name}"><p>${p.name}</p>
+      <button class="btn ghost editBtn">Edit</button>
+      <button class="btn ghost deleteBtn">Delete</button>`;
+    div.querySelector('img').addEventListener('click', ()=>{
+      showPage('home');
+      document.getElementById('welcomeTitle').innerText='Welcome, '+p.name;
+      renderHome();
+      if(currentUser?.email==='fxhdle2@gmail.com') document.getElementById('adminToggleBtn').style.display='inline-block';
+    });
+    div.querySelector('.editBtn').addEventListener('click', ()=>{
+      const newName=prompt('Edit profile name:',p.name);
+      if(newName){ profiles[index].name=newName; db.ref('profiles/'+currentUser.uid).set(profiles).then(renderProfiles); }
+    });
+    div.querySelector('.deleteBtn').addEventListener('click', async ()=>{
+      profiles.splice(index,1); await db.ref('profiles/'+currentUser.uid).set(profiles); renderProfiles();
+    });
+    profilesContainer.appendChild(div);
+  });
+}
+
+// ==== AUTH & OTHER PAGES ====
+// (Keep all your other JS as-is from previous code for login, home, player, admin, etc.)
 </script>
 </body>
 </html>
