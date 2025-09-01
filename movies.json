@@ -1,25 +1,4 @@
-{
-  "movies": [
-    {
-      "title": "The Legendary Beach",
-      "img": "https://github.com/FXHDLE112/test/releases/download/astorybasedgame1222/website.fix.again.1.1.png",
-      "src": "https://ik.imagekit.io/dookpgmfq9/The%20Legendary%20Beach.mp4?updatedAt=1756452207635",
-      "subtitles": null
-    },
-    {
-      "title": "Fahad's Adventure",
-      "img": "https://github.com/FXHDLE112/test/releases/download/astorybasedgame1222/website.fix.again.1.1.png",
-      "src": "https://ik.imagekit.io/dookpgmfq9/AnotherMovie.mp4?updatedAt=1756452207635",
-      "subtitles": null
-    }
-  ],
   "shows": [
-    {
-      "title": "Dragon Ball Dorm",
-      "img": "https://github.com/FXHDLE112/test/releases/download/astorybasedgame1222/website.fix.again.1.1.png",
-      "src": "https://ik.imagekit.io/dookpgmfq9/The%20Legendary%20Beach.mp4?updatedAt=1756452207635",
-      "subtitles": null
-    },
     {
       "title": "Dragon Ball Dorm Shenanigans",
       "img": "https://github.com/FXHDLE112/test/releases/download/astorybasedgame1222/website.fix.again.1.1.png",
@@ -28,7 +7,7 @@
           "season": 1,
           "episodes": [
             {
-              "title": "Episode 1: Dorm Move-In",
+              "title": "Episode 1: the legendary beach",
               "src": "https://ik.imagekit.io/dookpgmfq9/The%20Legendary%20Beach.mp4?updatedAt=1756452207635",
               "subtitles": null
             },
