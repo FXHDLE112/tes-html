@@ -29,6 +29,91 @@
               "subtitles": null
             }
           ]
+        },
+        {
+          "season": 2,
+          "episodes": [
+            {
+              "title": "episode 1 food Truck Frenzy",
+              "src": null,
+              "subtitles": null
+            },
+            {
+              "title": "episode 2 Waterpark Mayhem",
+              "src": null,
+              "subtitles": null
+            },
+            {
+              "title": "episode 3 Haunted room Night!",
+              "src": null,
+              "subtitles": null
+            },
+            {
+              "title": "episode 4 the olympics",
+              "src": null,
+              "subtitles": null
+            },
+            {
+              "title": "episode 5 the great heist ",
+              "src": null,
+              "subtitles": null
+            },
+            {
+              "title": "episode 6 fan art  Allegations",
+              "src": null,
+              "subtitles": null
+            }
+          ]
+        },
+        {
+          "season": 3,
+          "episodes": [
+            {
+              "title": "episode 1 The Mysterious Package from Qatar",
+              "src": null,
+              "subtitles": null
+            },
+            {
+              "title": "episode 2 The dark ages",
+              "src": null,
+              "subtitles": null
+            },
+            {
+              "title": "episode 3 McDonald’s Job Training Disaster",
+              "src": null,
+              "subtitles": null
+            },
+            {
+              "title": "episode 4 Walmart Field Trip",
+              "src": null,
+              "subtitles": null
+            },
+            {
+              "title": "episode 5 Haunted Bathroom",
+              "src": null,
+              "subtitles": null
+            },
+            {
+              "title": "episode 6 lost in mall",
+              "src": null,
+              "subtitles": null
+            },
+            {
+              "title": "episode 7 An Abandoned Warehouse",
+              "src": null,
+              "subtitles": null
+            },
+            {
+              "title": "episode 8 Midway subway ride",
+              "src": null,
+              "subtitles": null
+            },
+            {
+              "title": "Dorm court",
+              "src": null,
+              "subtitles": null
+            }
+          ]
         }
       ]
     }
