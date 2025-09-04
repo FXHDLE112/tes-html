@@ -118,18 +118,18 @@
         {
           "season": 4,
           "episodes": [
-            { "title": "episode 1 The Mall Challenge", "src": null, "subtitles": null },
-            { "title": "episode 2 Vegito’s Arrival", "src": null, "subtitles": null },
-            { "title": "episode 3 1000 Metal Coolers", "src": null, "subtitles": null },
-            { "title": "episode 4 Only Fahad Survives (by Plot)", "src": null, "subtitles": null },
-            { "title": "episode 5 Dorm Shenanigans Worldwide", "src": null, "subtitles": null },
-            { "title": "episode 6 The Dorm Turns Into a Game Show", "src": null, "subtitles": null },
-            { "title": "episode 7 The Broly Problem", "src": null, "subtitles": null },
-            { "title": "episode 8 King Kai’s Crazy Party", "src": null, "subtitles": null },
-            { "title": "episode 9 Virtual Reality Gone Wrong", "src": null, "subtitles": null },
-            { "title": "episode 10 The Dorm Court Returns", "src": null, "subtitles": null },
-            { "title": "episode 11 Piccolo’s Birthday Special", "src": null, "subtitles": null },
-            { "title": "episode 12 Chaos Tier Finale", "src": null, "subtitles": null }
+            { "title": "episode 1 Midnight Cooking Challenge", "src": null, "subtitles": null },
+            { "title": "episode 2 The Mall Challenge", "src": null, "subtitles": null },
+            { "title": "episode 3 the Hug of Doom", "src": null, "subtitles": null },
+            { "title": "episode 4 Dorm Talent Show: Extreme Edition", "src": null, "subtitles": null },
+            { "title": "episode 5 Metal Cooler Apocalypse", "src": null, "subtitles": null },
+            { "title": "episode 6 The Broly Problem", "src": null, "subtitles": null },
+            { "title": "episode 7 King Kai’s Crazy Party", "src": null, "subtitles": null },
+            { "title": "episode 8 Dorm Army Drill", "src": null, "subtitles": null },
+            { "title": "episode 9 Skydiving Trip", "src": null, "subtitles": null },
+            { "title": "episode 10 Dorm Study Exam", "src": null, "subtitles": null },
+            { "title": "episode 11 Dorm Blackout", "src": null, "subtitles": null },
+            { "title": "episode 12 Dorm Elevator Test", "src": null, "subtitles": null }
           ]
         }
       ]
