@@ -1,3 +1,16 @@
-version.txt         # "1.0.0"
-news.txt            # Your news content
-game.exe            # Optional if you want to host updates
+[
+  {
+    "name": "this is a game",
+    "gamePath": "C:\\Games\\Game1\\game.exe",
+    "versionURL": "https://raw.githubusercontent.com/username/Game1Repo/main/version.txt",
+    "newsURL": "https://raw.githubusercontent.com/username/Game1Repo/main/news.txt",
+    "downloadURL": "https://raw.githubusercontent.com/username/Game1Repo/main/game.exe"
+  },
+  {
+    "name": "no really it is a game",
+    "gamePath: "C:\\Games\\Game2\\game.exe",
+    "versionURL": "https://raw.githubusercontent.com/username/Game2Repo/main/version.txt",
+    "newsURL": "https://raw.githubusercontent.com/username/Game2Repo/main/news.txt",
+    "downloadURL": "https://raw.githubusercontent.com/username/Game2Repo/main/game.exe"
+  }
+]
